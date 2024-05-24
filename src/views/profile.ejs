@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
+    <title>Личный кабинет</title>
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -33,9 +33,12 @@
         </nav>
     </header>
     <main class="container mt-4">
-        <%= body %>
-        <h1>Добро пожаловать в Мой Магазин</h1>
-        <p>Здесь вы найдете множество интересных товаров!</p>
+        <!-- Содержимое личного кабинета -->
+        <h1>Личный кабинет</h1>
+        <p>Добро пожаловать, <%= username %>!</p>
+
+        <!-- Кнопка для перехода к странице заказов -->
+        <a href="/orders" class="btn btn-primary">Перейти к заказам</a>
     </main>
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

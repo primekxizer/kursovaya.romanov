@@ -14,9 +14,13 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// Маршруты
+// Маршруты для индекса и пользователей
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
+
+// Подключение маршрутов для личного кабинета и списка заказов
+app.use(require('./routes/profile'));
+app.use(require('./routes/orders')); // Добавлено подключение маршрутов для заказов
 
 
 // Подключение к базе данных MongoDB
@@ -31,5 +35,4 @@ mongoose.connect('mongodb://localhost/online-store', {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
-
 });
