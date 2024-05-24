@@ -14,14 +14,11 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// Маршруты для индекса и пользователей
+// Маршруты
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
-
-// Подключение маршрутов для личного кабинета и списка заказов
-app.use(require('./routes/profile'));
-app.use(require('./routes/orders')); // Добавлено подключение маршрутов для заказов
-
+app.use('/', require('./routes/profile'));
+app.use('/', require('./routes/cart'));
 
 // Подключение к базе данных MongoDB
 mongoose.connect('mongodb://localhost/online-store', {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Личный кабинет</title>
+    <title>Корзина</title>
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -36,13 +36,27 @@
         </nav>
     </header>
     <main class="container mt-4">
-        
-        <!-- Содержимое личного кабинета -->
-        <h1>Личный кабинет</h1>
-        <p>Добро пожаловать, <%= username %>!</p>
-
-        <!-- Кнопка для перехода к странице заказов -->
-        <a href="/orders" class="btn btn-primary">Перейти к заказам</a>
+        <!-- Содержимое корзины -->
+        <h1>Корзина</h1>
+        <ul class="list-group">
+            <% cartItems.forEach(function(item) { %>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <p><%= item.name %></p>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-secondary">-</button>
+                                <button type="button" class="btn btn-secondary"><%= item.quantity %></button>
+                                <button type="button" class="btn btn-secondary">+</button>
+                                <button type="button" class="btn btn-danger">Удалить</button>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            <% }); %>
+        </ul>
     </main>
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
