@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Маршрут для отображения личного кабинета
-router.get('/profile', function(req, res) {
+router.get('/', function(req, res) {
     res.render('profile', { username: 'Имя пользователя' });
 });
 

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+</head>
+<body>
+    <h1><%= title %></h1>
+    <form action="/admin/add" method="POST">
+        <!-- Добавьте поля для ввода информации о товаре, например, название, цена, описание и т.д. -->
+        <label for="name">Название товара:</label>
+        <input type="text" id="name" name="name">
+        <!-- Добавьте другие поля по аналогии -->
+        <button type="submit">Добавить товар</button>
+    </form>
+</body>
+</html>

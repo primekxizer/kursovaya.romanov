@@ -6,7 +6,7 @@ const router = express.Router();
 let cartItems = [];
 
 // Маршрут для отображения страницы корзины
-router.get('/cart', function(req, res) {
+router.get('/', function(req, res) {
     res.render('cart', { cartItems: cartItems });
 });
 
