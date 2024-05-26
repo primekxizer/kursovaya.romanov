@@ -7,7 +7,7 @@ const orders = []
 
 // Маршрут для отображения списка заказов
 router.get('/', (req, res) => {
-    res.render('orders', { orders: orders }); // Отображение шаблона orders.ejs с передачей списка заказов
+    res.render('orders', { orders: orders });
 });
 
 module.exports = router;

@@ -1,6 +1,6 @@
 const Product = require('../models/Product');
 
-// Получить все товары
+
 exports.getAllProducts = async (req, res) => {
     try {
         const products = await Product.find();
@@ -11,12 +11,12 @@ exports.getAllProducts = async (req, res) => {
     }
 };
 
-// Отобразить страницу создания нового товара
+
 exports.getCreateProductPage = function(req, res) {
     res.render('create-product', { title: 'Создание нового товара' });
 };
 
-// Создать новый товар
+
 exports.createProduct = async (req, res) => {
     const { name, price, description } = req.body;
 
@@ -35,7 +35,7 @@ exports.createProduct = async (req, res) => {
     }
 };
 
-// Отобразить страницу редактирования товара
+
 exports.getEditProductPage = async (req, res) => {
     const productId = req.params.id;
 
@@ -52,7 +52,7 @@ exports.getEditProductPage = async (req, res) => {
     }
 };
 
-// Сохранить отредактированный товар
+
 exports.saveEditedProduct = async (req, res) => {
     const productId = req.params.id;
     const { name, price, description } = req.body;
@@ -66,7 +66,7 @@ exports.saveEditedProduct = async (req, res) => {
     }
 };
 
-// Удалить товар
+
 exports.deleteProduct = async (req, res) => {
     const productId = req.params.id;
 

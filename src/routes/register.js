@@ -1,4 +1,4 @@
-// routes/register.js
+
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
@@ -12,16 +12,17 @@ router.get('/', (req, res) => {
 // Обработка регистрации пользователя
 router.post('/', async (req, res) => {
     const { username, email, password } = req.body;
-    
+
     try {
         // Проверка наличия пользователя с таким же email
         const existingUser = await User.findOne({ where: { email } });
         if (existingUser) {
-            return res.status(400).send('Пользователь с таким email уже существует.');
+            return res.render('register', { error: 'Пользователь с таким email уже существует.' });
         }
 
         // Хэширование пароля
         const hashedPassword = await bcrypt.hash(password, 10);
+        console.log('Хэшированный пароль:', hashedPassword); // Логирование хэшированного пароля
 
         // Создание нового пользователя
         await User.create({
@@ -32,7 +33,8 @@ router.post('/', async (req, res) => {
 
         res.redirect('/login');
     } catch (err) {
-        res.status(500).send('Ошибка сервера');
+        console.error(err.message);
+        res.render('register', { error: 'Ошибка сервера' });
     }
 });
 

@@ -1,66 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Корзина</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="/css/styles.css" rel="stylesheet">
-</head>
-<body>
-    <header>
-        <!-- Навигация -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="/">Brand Attire Hub</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/register">Регистрация</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">Вход</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/profile">Личный кабинет</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/cart">Корзина</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-    <main class="container mt-4">
-        <!-- Содержимое корзины -->
-        <h1>Корзина</h1>
-        <ul class="list-group">
-            <% cartItems.forEach(function(item) { %>
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <p><%= item.name %></p>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-secondary">-</button>
-                                <button type="button" class="btn btn-secondary"><%= item.quantity %></button>
-                                <button type="button" class="btn btn-secondary">+</button>
-                                <button type="button" class="btn btn-danger">Удалить</button>
-                            </div>
-                        </div>
+
+<%- include('partials/header', { title: 'Cart' }) %>
+
+<h1>Cart</h1>
+<% if (cartItems.length === 0) { %>
+    <p class="text-left">Your cart is empty.</p>
+<% } else { %>
+    <div class="row">
+        <% cartItems.forEach(item => { %>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= item.name %></h5>
+                        <p class="card-text">$<%= item.price %></p>
+                        <p class="card-text">Quantity: <%= item.quantity %></p>
                     </div>
-                </li>
-            <% }); %>
-        </ul>
-    </main>
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+<% } %>
+</main>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrap.com/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

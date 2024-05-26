@@ -1,14 +1,22 @@
-// routes/profile.js
+
 const express = require('express');
 const router = express.Router();
+const Order = require('../models/Order');
 
 // Отображение страницы профиля
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
     if (!req.session.user) {
         return res.redirect('/login');
     }
 
-    res.render('profile', { user: req.session.user });
+    try {
+        const user = req.session.user;
+        const orders = await Order.findAll({ where: { userId: user.id } });
+        res.render('profile', { user, orders });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 module.exports = router;

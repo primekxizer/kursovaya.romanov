@@ -1,39 +1,45 @@
-// server.js
+
 const express = require('express');
 const path = require('path');
-const session = require('express-session'); // Добавляем express-session
+const session = require('express-session');
 const sequelize = require('./config/database');
 const app = express();
 
-// Middleware для обработки JSON и URL-encoded данных
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Настройка express-session
+
 app.use(session({
-    secret: 'secret', // Секрет для подписи идентификатора сессии
+    secret: 'secret',
     resave: false,
     saveUninitialized: false
 }));
 
-// Установка директории для статических файлов
+
+app.use((req, res, next) => {
+    res.locals.user = req.session.user || null;
+    next();
+});
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Настройка шаблонизатора EJS
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// Маршруты
+
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 app.use('/profile', require('./routes/profile'));
-app.use('/orders', require('./routes/orders')); // Путь для orders.js
+app.use('/orders', require('./routes/orders'));
 app.use('/cart', require('./routes/cart'));
-app.use('/admin', require('./routes/admin')); // Добавляем маршруты для администратора
-app.use('/register', require('./routes/register')); // Добавляем маршрут для регистрации
-app.use('/login', require('./routes/login')); // Добавляем маршрут для входа
+app.use('/admin', require('./routes/admin'));
+app.use('/register', require('./routes/register'));
+app.use('/login', require('./routes/login'));
 
-// Подключение к базе данных MySQL и выполнение миграций
+
 sequelize.sync()
     .then(() => {
         console.log('Connected to MySQL');

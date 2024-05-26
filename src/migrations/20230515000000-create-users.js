@@ -1,4 +1,4 @@
-// migrations/20230515000000-create-users.js
+
 const { DataTypes } = require('sequelize');
 
 module.exports = {
