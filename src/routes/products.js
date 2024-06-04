@@ -1,16 +1,16 @@
-
 const express = require('express');
 const router = express.Router();
+const Subcategory = require('../models/Subcategory');
 
-// Маршрут для страницы товаров
-router.get('/', (req, res) => {
-    // получить данные о товарах из базы данных
-    const products = [
-        { id: 1, name: 'Товар 1', price: 100 },
-        { id: 2, name: 'Товар 2', price: 200 },
-        { id: 3, name: 'Товар 3', price: 300 }
-    ];
-    res.render('products', { products });
+// Маршрут для отображения подкатегорий по категории
+router.get('/subcategories', async (req, res) => {
+    try {
+        const category = req.query.category;
+        const subcategories = await Subcategory.findAll({ where: { category } });
+        res.json({ success: true, subcategories });
+    } catch (err) {
+        res.json({ success: false, message: 'Ошибка при загрузке подкатегорий' });
+    }
 });
 
 module.exports = router;

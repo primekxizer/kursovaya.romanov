@@ -20,11 +20,12 @@
     "jquery": "^3.7.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.0",
-    "mysql2": "^3.9.7",
+    "mysql2": "^3.10.0",
     "popper.js": "^1.16.1",
     "sequelize": "^6.37.3"
   },
   "devDependencies": {
+    "node-sass": "^9.0.0",
     "nodemon": "^3.1.0"
   }
 }

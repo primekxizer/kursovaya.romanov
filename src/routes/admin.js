@@ -1,34 +1,28 @@
-
-
 const express = require('express');
 const router = express.Router();
 
-
-router.get('/', function(req, res) {
-    res.render('admin', { title: 'Панель администратора' });
+// Маршрут для отображения панели администратора
+router.get('/dashboard', (req, res) => {
+    res.render('admin/dashboard', { title: 'Admin Dashboard' });
 });
 
 
-router.get('/add', function(req, res) {
-    res.render('add-product', { title: 'Добавить товар' });
+// Маршрут для добавления товара
+router.get('/add', (req, res) => {
+    res.render('add', { title: 'Add Product' });
 });
 
-router.post('/add', function(req, res) {
+// Маршрут для редактирования товара
+router.get('/edit/:id', (req, res) => {
+    const productId = req.params.id;
+
+    res.render('edit', { title: 'Edit Product', productId });
 });
 
+// Маршрут для управления заказами
+router.get('/orders', (req, res) => {
 
-router.get('/edit/:id', function(req, res) {
-
-});
-
-
-router.post('/edit/:id', function(req, res) {
-
-});
-
-
-router.post('/delete/:id', function(req, res) {
-
+    res.render('orders', { title: 'Orders' });
 });
 
 module.exports = router;

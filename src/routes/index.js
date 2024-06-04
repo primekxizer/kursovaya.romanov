@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
+const Category = require('../models/Category'); // Подключаем модель категорий
 
-router.get('/products', (req, res) => {
-    const products = [
-        { id: 1, name: 'Товар 1', price: 100 },
-        { id: 2, name: 'Товар 2', price: 200 },
-        { id: 3, name: 'Товар 3', price: 300 }
-    ];
-    res.render('products', { title: 'Товары', products });
+router.get('/products', async (req, res) => {
+    try {
+        const categories = await Category.findAll();
+        res.render('products', { title: 'Категории', categories });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Ошибка сервера');
+    }
 });
 
 router.get('/', (req, res) => {

@@ -1,0 +1,19 @@
+<%- include('partials/header', { title: 'Подкатегории' }) %>
+
+<div class="container mt-4">
+    <h2 class="text-center">Подкатегории</h2>
+    <div class="row">
+        <% subcategories.forEach(subcategory => { %>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <h5 class="card-title"><%= subcategory.name %></h5>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</div>
+</main>
+</body>
+</html>

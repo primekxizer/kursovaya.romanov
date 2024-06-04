@@ -1,0 +1,44 @@
+<!-- manage-orders.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Orders</title>
+</head>
+<body>
+    <h1>Manage Orders</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Customer Name</th>
+                <th>Product</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% orders.forEach(order => { %>
+                <tr>
+                    <td><%= order.id %></td>
+                    <td><%= order.customerName %></td>
+                    <td><%= order.productName %></td>
+                    <td><%= order.status %></td>
+                    <td>
+                        <form action="/admin/manage-orders/<%= order.id %>/accept" method="POST">
+                            <button type="submit">Accept</button>
+                        </form>
+                        <form action="/admin/manage-orders/<%= order.id %>/reject" method="POST">
+                            <button type="submit">Reject</button>
+                        </form>
+                        <form action="/admin/manage-orders/<%= order.id %>/complete" method="POST">
+                            <button type="submit">Complete</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</body>
+</html>

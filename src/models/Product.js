@@ -1,19 +1,28 @@
-const mongoose = require('mongoose');
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
+const Subcategory = require('./Subcategory');
 
-const productSchema = new mongoose.Schema({
+const Product = sequelize.define('Product', {
     name: {
-        type: String,
-        required: true
+        type: DataTypes.STRING,
+        allowNull: false
     },
     price: {
-        type: Number,
-        required: true
+        type: DataTypes.FLOAT,
+        allowNull: false
     },
-    description: {
-        type: String
+    subcategoryId: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Subcategory,
+            key: 'id'
+        }
     }
+}, {
+    timestamps: false
 });
 
-const Product = mongoose.model('Product', productSchema);
+Product.belongsTo(Subcategory, { foreignKey: 'subcategoryId', as: 'subcategory' });
+Subcategory.hasMany(Product, { foreignKey: 'subcategoryId', as: 'products' });
 
 module.exports = Product;
