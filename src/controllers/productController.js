@@ -4,17 +4,17 @@ exports.showAddForm = (req, res) => {
 };
 
 exports.addProduct = (req, res) => {
-    // Логика добавления товара
+
 };
 
 exports.showEditForm = (req, res) => {
-    // Логика для отображения формы редактирования товара
+
 };
 
 exports.editProduct = (req, res) => {
-    // Логика редактирования товара
+
 };
 
 exports.deleteProduct = (req, res) => {
-    // Логика удаления товара
+
 };

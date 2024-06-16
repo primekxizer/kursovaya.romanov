@@ -1,19 +1,10 @@
+
+
 const express = require('express');
 const router = express.Router();
-const Category = require('../models/Category'); // Подключаем модель категорий
-
-router.get('/products', async (req, res) => {
-    try {
-        const categories = await Category.findAll();
-        res.render('products', { title: 'Категории', categories });
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Ошибка сервера');
-    }
-});
-
+const { fetchCartItems } = require('../controllers/cartController'); 
 router.get('/', (req, res) => {
-    res.render('index', { title: 'Главная страница', body: '' });
+    res.render('index', { title: 'Главная страница' });
 });
 
 router.get('/register', (req, res) => {
@@ -22,6 +13,24 @@ router.get('/register', (req, res) => {
 
 router.get('/login', (req, res) => {
     res.render('login', { title: 'Вход' });
+});
+
+router.get('/cart', async (req, res) => {
+    try {
+        if (!req.session.user) {
+            return res.redirect('/login');
+        }
+
+        const userId = req.session.user.id;
+        console.log('Fetching cart items for userId:', userId); 
+
+        const items = await fetchCartItems(userId);
+
+        res.render('cart', { title: 'Корзина', cartItems: items }); 
+    } catch (error) {
+        console.error('Error fetching cart items:', error);
+        res.status(500).render('500', { title: 'Server Error' });
+    }
 });
 
 module.exports = router;

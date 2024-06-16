@@ -1,27 +1,65 @@
 
-<%- include('partials/header', { title: 'Cart' }) %>
-
-<h1>Cart</h1>
-<% if (cartItems.length === 0) { %>
-    <p class="text-left">Your cart is empty.</p>
-<% } else { %>
-    <div class="row">
-        <% cartItems.forEach(item => { %>
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title"><%= item.name %></h5>
-                        <p class="card-text">$<%= item.price %></p>
-                        <p class="card-text">Quantity: <%= item.quantity %></p>
+<%- include('partials/header', { title: 'Корзина' }) %>
+<main class="container mt-4">
+    <h1 class="text-center">Корзина</h1>
+    <% if (cartItems && cartItems.length > 0) { %>
+        <ul class="list-group">
+            <% cartItems.forEach(cartItem => { %>
+                <li class="list-group-item">
+                    <div class="row align-items-center">
+                        <div class="col-md-2">
+                            <img src="<%= cartItem.Product.imageUrl %>" alt="<%= cartItem.Product.name %>" class="img-fluid">
+                        </div>
+                        <div class="col-md-8">
+                            <%= cartItem.Product.name %> - <%= cartItem.price %> руб.
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-danger btn-sm remove-btn" data-item-id="<%= cartItem.id %>">Удалить</button>
+                        </div>
                     </div>
-                </div>
-            </div>
-        <% }) %>
-    </div>
-<% } %>
+                </li>
+            <% }); %>
+        </ul>
+        <div class="text-center mt-4">
+            <a href="/checkout" class="btn btn-primary">Оформить заказ</a>
+        </div>
+    <% } else { %>
+        <p class="text-center">Ваша корзина пуста.</p>
+    <% } %>
 </main>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrap.com/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+<%- include('partials/footer') %>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const removeButtons = document.querySelectorAll('.remove-btn');
+
+        removeButtons.forEach(button => {
+            button.addEventListener('click', async (event) => {
+                const itemId = button.getAttribute('data-item-id');
+
+                try {
+                    const response = await fetch(`/cart/remove`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ itemId })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    const data = await response.json();
+                    console.log(data); 
+
+                    
+                    button.closest('.list-group-item').remove();
+                } catch (error) {
+                    console.error('Error removing product from cart:', error);
+                    
+                }
+            });
+        });
+    });
+</script>

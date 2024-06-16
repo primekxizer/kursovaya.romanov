@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "19801985", 
+    "database": "online_shop",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "19801985", 
+    "database": "online_shop", 
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "19801985", 
+    "database": "online_shop", 
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}

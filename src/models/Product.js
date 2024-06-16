@@ -1,28 +1,87 @@
-const { DataTypes } = require('sequelize');
+
+
+const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
-const Subcategory = require('./Subcategory');
 
 const Product = sequelize.define('Product', {
     name: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
     },
     price: {
         type: DataTypes.FLOAT,
-        allowNull: false
+        allowNull: false,
     },
-    subcategoryId: {
+    shortDescription: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+    },
+    fullDescription: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+    },
+    category: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    subcategory: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    characteristic1: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    characteristic2: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    characteristic3: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    imageUrl: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    availability: {
         type: DataTypes.INTEGER,
-        references: {
-            model: Subcategory,
-            key: 'id'
-        }
-    }
+        allowNull: false,
+    },
+    color: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    brand: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    collection: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    size: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
+    releaseYear: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
+    manufacturer: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    storage: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    signalType: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
 }, {
-    timestamps: false
+    tableName: 'products', 
 });
-
-Product.belongsTo(Subcategory, { foreignKey: 'subcategoryId', as: 'subcategory' });
-Subcategory.hasMany(Product, { foreignKey: 'subcategoryId', as: 'products' });
 
 module.exports = Product;

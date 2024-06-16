@@ -1,0 +1,42 @@
+<!-- checkout.ejs -->
+
+<%- include('partials/header', { title: 'Оформление заказа' }) %>
+<main class="container mt-4">
+    <h1 class="text-center">Оформление заказа</h1>
+    <form action="/checkout/process" method="POST">
+        <div class="form-group">
+            <label for="email">Электронная почта</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="pickup">Способ получения</label>
+            <select class="form-control" id="pickup" name="pickup" required>
+                <option value="pickup">Самовывоз</option>
+                <option value="delivery">Доставка</option>
+            </select>
+        </div>
+        <div id="delivery-address" style="display: none;">
+            <div class="form-group">
+                <label for="address">Адрес доставки</label>
+                <textarea class="form-control" id="address" name="address"></textarea>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Оплатить</button>
+    </form>
+</main>
+<%- include('partials/footer') %>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const pickupSelect = document.getElementById('pickup');
+        const deliveryAddress = document.getElementById('delivery-address');
+
+        pickupSelect.addEventListener('change', () => {
+            if (pickupSelect.value === 'delivery') {
+                deliveryAddress.style.display = 'block';
+            } else {
+                deliveryAddress.style.display = 'none';
+            }
+        });
+    });
+</script>

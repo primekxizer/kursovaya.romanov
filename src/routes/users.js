@@ -1,10 +1,12 @@
+
+
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const { ensureAuthenticated } = require('../auth'); 
 
-// Регистрация
+
 router.post('/register', async (req, res) => {
     const { username, email, password } = req.body;
 
@@ -17,11 +19,13 @@ router.post('/register', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         user = await User.create({ username, email, password: hashedPassword });
 
-        const payload = { user: { id: user.id } };
-        jwt.sign(payload, 'secret', { expiresIn: 360000 }, (err, token) => {
-            if (err) throw err;
-            res.redirect('/login');
-        });
+        req.session.user = {
+            id: user.id,
+            username: user.username,
+            email: user.email
+        };
+
+        res.redirect('/profile');
     } catch (err) {
         console.error(err.message);
         res.render('register', { error: 'Ошибка сервера' });
@@ -35,26 +39,28 @@ router.post('/login', async (req, res) => {
     try {
         const user = await User.findOne({ where: { email } });
         if (!user) {
-            return res.render('login', { error: 'Неверные учетные данные' });
+            return res.render('login', { error: 'Неверный email или пароль.' });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.render('login', { error: 'Неверные учетные данные' });
+            return res.render('login', { error: 'Неверный email или пароль.' });
         }
 
-        const payload = { user: { id: user.id } };
-        jwt.sign(payload, 'secret', { expiresIn: 360000 }, (err, token) => {
-            if (err) throw err;
-            res.redirect('/profile');
-        });
+        req.session.user = {
+            id: user.id,
+            username: user.username,
+            email: user.email
+        };
+
+        res.redirect('/profile');
     } catch (err) {
-        console.error(err.message);
+        console.error('Ошибка сервера:', err.message);
         res.render('login', { error: 'Ошибка сервера' });
     }
 });
 
-    // Выход из аккаунта
+
 router.get('/logout', (req, res) => {
     req.session.destroy((err) => {
         if (err) {
@@ -64,6 +70,5 @@ router.get('/logout', (req, res) => {
         res.redirect('/login');
     });
 });
-
 
 module.exports = router;

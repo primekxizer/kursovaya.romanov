@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Subcategory = require('../models/Subcategory');
 
-// Маршрут для получения подкатегорий конкретной категории
+
 router.get('/:categoryId/subcategories', async (req, res) => {
     const { categoryId } = req.params;
     try {
