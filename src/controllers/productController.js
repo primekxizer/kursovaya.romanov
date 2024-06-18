@@ -1,4 +1,4 @@
-// productsController.js
+
 exports.showAddForm = (req, res) => {
     res.render('admin/products/add');
 };

@@ -1,30 +1,40 @@
-
 <%- include('partials/header', { title: 'Profile' }) %>
 
-<h1>Profile</h1>
-<p>Welcome, <%= user.username %>!</p>
-<h2>Your Orders</h2>
-<% if (orders.length === 0) { %>
-    <p class="text-left">You have no orders.</p>
-<% } else { %>
-    <div class="row">
-        <% orders.forEach(order => { %>
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Order #<%= order.id %></h5>
-                        <p class="card-text">Total: $<%= order.total %></p>
-                        <p class="card-text">Status: <%= order.status %></p>
+<main class="container mt-4">
+    <h1>Профиль</h1>
+    <p>Добро пожаловать, <%= user.username %>!</p>
+
+    <h2>Ваши заказы</h2>
+    <% if (orders.length === 0) { %>
+        <p class="text-left">У вас нет заказов.</p>
+    <% } else { %>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <% orders.forEach(order => { %>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Заказ #<%= order.id %></h5>
+                            <div class="card-text">
+                                <ul class="list-group list-group-flush">
+                                    <% order.items.forEach(item => { %>
+                                        <li class="list-group-item">
+                                            <div class="mb-2">
+                                                <p>Название: <%= item.name %></p>
+                                                <p>Цена: $<%= item.price %></p>
+                                                <p>Количество: <%= item.quantity %></p>
+                                            </div>
+                                        </li>
+                                    <% }) %>
+                                </ul>
+                                <p>Итого: $<%= order.total %></p>
+                                <p>Статус: <%= order.status %></p> 
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        <% }) %>
-    </div>
-<% } %>
+            <% }) %>
+        </div>
+    <% } %>
 </main>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrap.com/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+<%- include('partials/footer') %>

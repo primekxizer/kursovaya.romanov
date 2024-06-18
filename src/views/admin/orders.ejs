@@ -1,0 +1,27 @@
+<%- include('../partials/header', { title: 'Manage Orders' }) %>
+
+<main class="container mt-4">
+    <h1>Управление заказами</h1>
+    <ul class="list-group">
+        <% orders.forEach(order => { %>
+            <li class="list-group-item">
+                <h5>Заказ #<%= order.id %> - <%= order.status %></h5>
+                <p>Сумма: $<%= order.total %></p>
+                <form action="/admin/orders/<%= order.id %>/update-status" method="post">
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Статус</label>
+                        <select class="form-select" id="status" name="status" required>
+                            <option value="в ожидании" <%= order.status === 'в ожидании' ? 'selected' : '' %>>в ожидании</option>
+                            <option value="в работе" <%= order.status === 'в работе' ? 'selected' : '' %>>в работе</option>
+                            <option value="отклонен" <%= order.status === 'отклонен' ? 'selected' : '' %>>отклонен</option>
+                            <option value="завершен" <%= order.status === 'завершен' ? 'selected' : '' %>>завершен</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Обновить статус</button>
+                </form>
+            </li>
+        <% }) %>
+    </ul>
+</main>
+
+<%- include('../partials/footer') %>

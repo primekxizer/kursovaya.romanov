@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
         const { category, subcategory, color, brand, collection, size, releaseYear, manufacturer, storage, signalType, sort, search } = req.query;
         let whereClause = {};
         let orderClause = [];
-        
+
         if (category) {
             whereClause.category = category;
         }
@@ -71,6 +71,9 @@ router.get('/', async (req, res) => {
                 default:
                     break;
             }
+        } else {
+            
+            orderClause.push(['name', 'ASC']);
         }
 
         const products = await Product.findAll({ where: whereClause, order: orderClause });
@@ -104,7 +107,14 @@ router.get('/:id', async (req, res) => {
     try {
         const product = await Product.findByPk(req.params.id);
         if (product) {
-            res.render('product', { title: product.name, product, user: req.session.user }); 
+          
+            const userId = req.session.userId; 
+
+            res.render('product', { 
+                title: product.name, 
+                product, 
+                userId: userId 
+            }); 
         } else {
             res.status(404).render('404', { title: 'Product Not Found' });
         }

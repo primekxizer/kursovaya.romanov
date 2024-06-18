@@ -30,7 +30,7 @@ const seedDatabase = async () => {
                         characteristic2: `Характеристика 2 для товара ${i + 1}`,
                         characteristic3: `Характеристика 3 для товара ${i + 1}`,
                         imageUrl: imageUrl,
-                        availability: defaultAvailability,  // устанавливаем значение по умолчанию
+                        availability: defaultAvailability,  
                     });
                 }
             }

@@ -6,19 +6,19 @@ const sequelize = require('../config/database');
 const Product = sequelize.define('Product', {
     name: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: false
     },
     price: {
-        type: DataTypes.FLOAT,
-        allowNull: false,
+        type: DataTypes.FLOAT, 
+        allowNull: false
     },
     shortDescription: {
-        type: DataTypes.TEXT,
-        allowNull: false,
+        type: DataTypes.STRING,
+        allowNull: false
     },
     fullDescription: {
-        type: DataTypes.TEXT,
-        allowNull: false,
+        type: DataTypes.STRING,
+        allowNull: false
     },
     category: {
         type: DataTypes.STRING,
@@ -45,8 +45,8 @@ const Product = sequelize.define('Product', {
         allowNull: false,
     },
     availability: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
+        type: DataTypes.INTEGER, 
+        allowNull: false
     },
     color: {
         type: DataTypes.STRING,

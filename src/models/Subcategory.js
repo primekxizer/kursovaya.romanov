@@ -9,7 +9,7 @@ const Subcategory = sequelize.define('Subcategory', {
     categoryId: {
         type: DataTypes.INTEGER,
         references: {
-            model: 'Categories',
+            model: 'Category',
             key: 'id'
         }
     }

@@ -6,7 +6,13 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const sequelize = require('./config/database');
-const User = require('./models/User'); // Подключаем модель пользователя
+const User = require('./models/User'); 
+const CartItem = require('./models/cartItem'); 
+
+const usersRoutes = require('./routes/users');
+const adminRoutes = require('./routes/admin');
+const profileRoutes = require('./routes/profile');
+const checkoutRoutes = require('./routes/checkout');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,8 +21,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
 
 const sessionStore = new SequelizeStore({
     db: sequelize,
@@ -32,6 +37,7 @@ app.use(session({
     }
 }));
 
+
 sessionStore.sync();
 
 
@@ -45,15 +51,15 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 
-app.use('/', require('./routes/index'));
-app.use('/users', require('./routes/users'));
-app.use('/profile', require('./routes/profile'));
-app.use('/orders', require('./routes/orders'));
-app.use('/admin', require('./routes/admin'));
+app.use('/users', usersRoutes);
+app.use('/admin', adminRoutes);
+app.use('/profile', profileRoutes);
+app.use('/checkout', checkoutRoutes);
 app.use('/register', require('./routes/register'));
 app.use('/login', require('./routes/login'));
 app.use('/products', require('./routes/products'));
 app.use('/cart', require('./routes/cart'));
+app.use('/orders', require('./routes/orders'));
 
 
 app.get('/', (req, res) => {
@@ -62,22 +68,23 @@ app.get('/', (req, res) => {
 
 
 app.use((req, res) => {
-    res.status(404).render('404', { title: 'Page Not Found' });
+    res.status(404).render('404', { title: 'Страница не найдена' });
 });
+
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).render('500', { title: 'Server Error' });
+    res.status(500).render('500', { title: 'Ошибка сервера' });
 });
 
 
 sequelize.sync()
     .then(() => {
-        console.log('Connected to MySQL');
+        console.log('Соединение с MySQL установлено');
         app.listen(PORT, () => {
-            console.log(`Server is running on port ${PORT}`);
+            console.log(`Сервер запущен на порту ${PORT}`);
         });
     })
     .catch(err => {
-        console.error('Unable to connect to the database:', err);
+        console.error('Не удалось подключиться к базе данных:', err);
     });

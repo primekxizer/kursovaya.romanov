@@ -4,8 +4,6 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
-const { ensureAuthenticated } = require('../auth'); 
-
 
 router.post('/register', async (req, res) => {
     const { username, email, password } = req.body;
@@ -22,7 +20,8 @@ router.post('/register', async (req, res) => {
         req.session.user = {
             id: user.id,
             username: user.username,
-            email: user.email
+            email: user.email,
+            isAdmin: user.isAdmin 
         };
 
         res.redirect('/profile');
@@ -32,7 +31,7 @@ router.post('/register', async (req, res) => {
     }
 });
 
-// Авторизация
+
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
@@ -50,7 +49,8 @@ router.post('/login', async (req, res) => {
         req.session.user = {
             id: user.id,
             username: user.username,
-            email: user.email
+            email: user.email,
+            isAdmin: user.isAdmin  
         };
 
         res.redirect('/profile');

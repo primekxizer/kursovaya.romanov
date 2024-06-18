@@ -1,41 +1,56 @@
-<!-- checkout.ejs -->
-
 <%- include('partials/header', { title: 'Оформление заказа' }) %>
 <main class="container mt-4">
-    <h1 class="text-center">Оформление заказа</h1>
+    <h1 class="text-center mb-4">Оформление заказа</h1>
     <form action="/checkout/process" method="POST">
-        <div class="form-group">
-            <label for="email">Электронная почта</label>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
             <input type="email" class="form-control" id="email" name="email" required>
         </div>
-        <div class="form-group">
-            <label for="pickup">Способ получения</label>
-            <select class="form-control" id="pickup" name="pickup" required>
-                <option value="pickup">Самовывоз</option>
-                <option value="delivery">Доставка</option>
-            </select>
+        <div class="mb-3">
+            <label for="name" class="form-label">Имя</label>
+            <input type="text" class="form-control" id="name" name="name" required>
         </div>
-        <div id="delivery-address" style="display: none;">
-            <div class="form-group">
-                <label for="address">Адрес доставки</label>
-                <textarea class="form-control" id="address" name="address"></textarea>
-            </div>
+        <div class="mb-3">
+            <label for="phone" class="form-label">Телефон</label>
+            <input type="tel" class="form-control" id="phone" name="phone" required>
         </div>
-        <button type="submit" class="btn btn-primary">Оплатить</button>
+        <div class="mb-3">
+            <label class="form-check-label">Выберите способ доставки:</label>
+        </div>
+        <div class="mb-3 form-check">
+            <input type="radio" class="form-check-input" id="pickup" name="deliveryMethod" value="pickup" checked>
+            <label for="pickup" class="form-check-label">Самовывоз</label>
+        </div>
+        <div class="mb-3 form-check">
+            <input type="radio" class="form-check-input" id="delivery" name="deliveryMethod" value="delivery">
+            <label for="delivery" class="form-check-label">Доставка</label>
+        </div>
+        <div id="address-field" class="mb-3" style="display: none;">
+            <label for="address" class="form-label">Адрес доставки</label>
+            <input type="text" class="form-control" id="address" name="address">
+        </div>
+        <button type="submit" class="btn btn-primary">Подтвердить заказ</button>
     </form>
+    
+ 
+    <% if (locals.orderPlaced) { %>
+        <div class="alert alert-success mt-3" role="alert">
+            Заказ успешно оформлен!
+        </div>
+    <% } %>
 </main>
 <%- include('partials/footer') %>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const pickupSelect = document.getElementById('pickup');
-        const deliveryAddress = document.getElementById('delivery-address');
+        const deliveryRadio = document.getElementById('delivery');
+        const addressField = document.getElementById('address-field');
 
-        pickupSelect.addEventListener('change', () => {
-            if (pickupSelect.value === 'delivery') {
-                deliveryAddress.style.display = 'block';
+        deliveryRadio.addEventListener('change', () => {
+            if (deliveryRadio.checked) {
+                addressField.style.display = 'block';
             } else {
-                deliveryAddress.style.display = 'none';
+                addressField.style.display = 'none';
             }
         });
     });

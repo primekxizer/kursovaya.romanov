@@ -1,15 +1,11 @@
-
-
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
-
 router.get('/', (req, res) => {
     res.render('login');
 });
-
 
 router.post('/', async (req, res) => {
     const { email, password } = req.body;
@@ -28,7 +24,8 @@ router.post('/', async (req, res) => {
         req.session.user = {
             id: user.id,
             username: user.username,
-            email: user.email
+            email: user.email,
+            isAdmin: user.isAdmin 
         };
 
         res.redirect('/profile');
@@ -37,7 +34,6 @@ router.post('/', async (req, res) => {
         res.render('login', { error: 'Ошибка сервера' });
     }
 });
-
 
 router.get('/logout', (req, res) => {
     req.session.destroy((err) => {
